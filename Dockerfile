@@ -8,6 +8,7 @@ RUN npm run build
 
 # Stage 2: Production Server
 FROM node:20-alpine AS server
+RUN apk add --no-cache openssl libc6-compat
 WORKDIR /app
 COPY server/package*.json ./server/
 WORKDIR /app/server

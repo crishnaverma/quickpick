@@ -61,6 +61,18 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// One-Click Database Seed Endpoint
+app.post('/api/seed', async (req, res) => {
+  try {
+    const { seedDatabase } = require('./database/seed');
+    await seedDatabase();
+    return success(res, null, 'Grocery catalog, categories & demo accounts seeded successfully!');
+  } catch (err) {
+    console.error('Seed endpoint error:', err);
+    return res.status(500).json({ success: false, message: err.message });
+  }
+});
+
 // Public Shop Information Endpoint
 app.get('/api/settings/public', async (req, res, next) => {
   try {

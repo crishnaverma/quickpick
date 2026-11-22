@@ -10,13 +10,29 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = initSocket(server);
 
-server.listen(PORT, () => {
+// Auto-seed if database is empty on startup
+const autoSeedIfEmpty = async () => {
+  try {
+    const productCount = await prisma.product.count();
+    if (productCount === 0) {
+      console.log('🌱 Database is empty (0 products found). Auto-seeding catalog & demo accounts...');
+      const { seedDatabase } = require('./database/seed');
+      await seedDatabase();
+      console.log('✨ Auto-seed completed successfully!');
+    }
+  } catch (err) {
+    console.warn('Auto-seed check note:', err.message);
+  }
+};
+
+server.listen(PORT, async () => {
   console.log('====================================================');
   console.log(`🥦 QuickPick API Server running on port ${PORT}`);
   console.log(`⚡ Socket.IO real-time engine attached`);
   console.log(`🌐 Base URL: http://localhost:${PORT}`);
   console.log(`🩺 Health check: http://localhost:${PORT}/api/health`);
   console.log('====================================================');
+  await autoSeedIfEmpty();
 });
 
 // Graceful Shutdown

@@ -11,10 +11,27 @@ export const HomePage = ({ currentSearch = '', currentCategory = '', onCategoryC
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(currentCategory);
   const [selectedSort, setSelectedSort] = useState('popular');
   const [inStockOnly, setInStockOnly] = useState(false);
   const [activeModalProduct, setActiveModalProduct] = useState(null);
+
+  const handleSeedDatabase = async () => {
+    try {
+      setSeeding(true);
+      await api.post('/seed');
+      // Refetch categories and products
+      const catsRes = await api.get('/products/categories');
+      if (catsRes.success) setCategories(catsRes.data);
+      const prodsRes = await api.get('/products');
+      if (prodsRes.success) setProducts(prodsRes.data.products);
+    } catch (err) {
+      alert('Seeding failed: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setSeeding(false);
+    }
+  };
 
   // Sync category with parent prop if provided
   useEffect(() => {
@@ -178,21 +195,50 @@ export const HomePage = ({ currentSearch = '', currentCategory = '', onCategoryC
               <p className="text-xs font-medium">Loading grocery catalogue...</p>
             </div>
           ) : products.length === 0 ? (
-            <div className="py-16 text-center bg-white rounded-3xl border border-slate-200 p-8 max-w-lg mx-auto">
+            <div className="py-16 text-center bg-white rounded-3xl border border-slate-200 p-8 max-w-lg mx-auto shadow-sm">
               <AlertCircle className="w-10 h-10 text-slate-400 mx-auto mb-2" />
-              <h3 className="font-bold text-slate-900 text-base">No products match your criteria</h3>
+              <h3 className="font-bold text-slate-900 text-base">
+                {categories.length === 0 ? 'No Products Found in Store Database' : 'No products match your criteria'}
+              </h3>
               <p className="text-xs text-slate-500 mt-1 mb-4">
-                Try selecting a different category or clearing search filters.
+                {categories.length === 0
+                  ? 'Your database has been created, but product data has not been seeded yet.'
+                  : 'Try selecting a different category or clearing search filters.'}
               </p>
-              <button
-                onClick={() => {
-                  setSelectedCategory('');
-                  if (onClearSearch) onClearSearch();
-                }}
-                className="px-4 py-2 bg-brand-600 text-white rounded-xl text-xs font-bold hover:bg-brand-700 transition"
-              >
-                Reset Filters
-              </button>
+              
+              {categories.length === 0 ? (
+                <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
+                  <p className="text-xs text-emerald-800 font-medium mb-3">
+                    Click below to populate the store with 22 grocery products, 9 categories, pickup slots, and demo accounts:
+                  </p>
+                  <button
+                    onClick={handleSeedDatabase}
+                    disabled={seeding}
+                    className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 mx-auto shadow-md"
+                  >
+                    {seeding ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Seeding Database...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>🌱 Seed Demo Grocery Catalogue</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    setSelectedCategory('');
+                    if (onClearSearch) onClearSearch();
+                  }}
+                  className="px-4 py-2 bg-brand-600 text-white rounded-xl text-xs font-bold hover:bg-brand-700 transition"
+                >
+                  Reset Filters
+                </button>
+              )}
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">

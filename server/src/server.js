@@ -1,0 +1,33 @@
+const http = require('http');
+const app = require('./app');
+const { initSocket } = require('./socket');
+const prisma = require('./database/prisma');
+
+const PORT = process.env.PORT || 5000;
+
+const server = http.createServer(app);
+
+// Initialize Socket.IO
+const io = initSocket(server);
+
+server.listen(PORT, () => {
+  console.log('====================================================');
+  console.log(`🥦 QuickPick API Server running on port ${PORT}`);
+  console.log(`⚡ Socket.IO real-time engine attached`);
+  console.log(`🌐 Base URL: http://localhost:${PORT}`);
+  console.log(`🩺 Health check: http://localhost:${PORT}/api/health`);
+  console.log('====================================================');
+});
+
+// Graceful Shutdown
+const shutdown = async () => {
+  console.log('\nShutting down QuickPick server gracefully...');
+  server.close(async () => {
+    await prisma.$disconnect();
+    console.log('Server and database connections closed.');
+    process.exit(0);
+  });
+};
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);

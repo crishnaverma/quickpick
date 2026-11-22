@@ -1,0 +1,28 @@
+{
+  "name": "quickpick",
+  "version": "1.0.0",
+  "description": "QuickPick - Grocery Click-and-Collect Platform for Local Grocery Stores",
+  "scripts": {
+    "setup": "cd server && npm install && node src/database/setup-db.js && cd ../client && npm install && npm run build",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start",
+    "test": "cd server && npm test",
+    "db:setup": "cd server && node src/database/setup-db.js",
+    "db:postgres": "cd server && node src/database/setup-db.js --pg",
+    "db:sqlite": "cd server && node src/database/setup-db.js --sqlite"
+  },
+  "keywords": [
+    "grocery",
+    "click-and-collect",
+    "ecommerce",
+    "pickup",
+    "react",
+    "nodejs",
+    "prisma",
+    "postgresql"
+  ],
+  "author": "QuickPick Team",
+  "license": "ISC"
+}

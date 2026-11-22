@@ -1,0 +1,267 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  phone        String        @unique
+  passwordHash String
+  name         String
+  role         String        @default("CUSTOMER") // CUSTOMER, STAFF, ADMIN
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  addresses    Address[]
+  cart         Cart?
+  orders       Order[]
+  auditLogs    AuditLog[]
+  movements    InventoryMovement[] @relation("StaffInventoryMovements")
+  collectedPickups Pickup[]        @relation("StaffCollectedPickups")
+}
+
+model Address {
+  id         String   @id @default(uuid())
+  userId     String
+  label      String   @default("Home")
+  street     String
+  city       String
+  postalCode String
+  landmark   String?
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id           String    @id @default(uuid())
+  name         String    @unique
+  slug         String    @unique
+  description  String?
+  image        String?
+  displayOrder Int       @default(0)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  products     Product[]
+}
+
+model Product {
+  id                String              @id @default(uuid())
+  categoryId        String
+  name              String
+  slug              String              @unique
+  description       String?
+  images            String              @default("[]") // JSON string of images array
+  unitType          String              @default("FIXED") // FIXED, WEIGHT
+  defaultUnit       String              // e.g. "1 pc", "500g", "1 kg"
+  price             Float
+  compareAtPrice    Float?
+  costPrice         Float?
+  stockQuantity     Int                 @default(0)
+  reservedStock     Int                 @default(0)
+  minStockThreshold Int                 @default(5)
+  isAvailable       Boolean             @default(true)
+  isActive          Boolean             @default(true)
+  variants          String?             // JSON string
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+
+  category          Category            @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  cartItems         CartItem[]
+  orderItems        OrderItem[]
+  inventoryMovements InventoryMovement[]
+}
+
+model Cart {
+  id           String     @id @default(uuid())
+  userId       String?    @unique
+  sessionToken String?    @unique
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  user         User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items        CartItem[]
+}
+
+model CartItem {
+  id            String   @id @default(uuid())
+  cartId        String
+  productId     String
+  unitVariant   String   @default("default")
+  quantity      Int      @default(1)
+  priceSnapshot Float
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  cart          Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([cartId, productId, unitVariant])
+}
+
+model PickupSlot {
+  id          String   @id @default(uuid())
+  date        DateTime
+  startTime   String
+  endTime     String
+  maxOrders   Int      @default(10)
+  bookedCount Int      @default(0)
+  isClosed    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  orders      Order[]
+
+  @@unique([date, startTime, endTime])
+}
+
+model Order {
+  id                  String       @id @default(uuid())
+  orderNumber         String       @unique
+  userId              String
+  pickupSlotId        String?
+  status              String       @default("PLACED") // PLACED, ACCEPTED, PREPARING, READY, COLLECTED, CANCELLED, REJECTED
+  pickupType          String       @default("ASAP") // ASAP, SCHEDULED
+  estimatedPickupTime DateTime?
+  idempotencyKey      String?      @unique
+  subtotal            Float
+  taxTotal            Float        @default(0.0)
+  discountTotal       Float        @default(0.0)
+  totalAmount         Float
+  notes               String?
+  rejectionReason     String?
+  cancellationReason  String?
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  user                User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+  pickupSlot          PickupSlot?  @relation(fields: [pickupSlotId], references: [id], onDelete: SetNull)
+  items               OrderItem[]
+  payment             Payment?
+  pickup              Pickup?
+  movements           InventoryMovement[]
+}
+
+model OrderItem {
+  id          String   @id @default(uuid())
+  orderId     String
+  productId   String
+  productName String
+  productUnit String
+  unitVariant String   @default("default")
+  quantity    Int
+  unitPrice   Float
+  totalPrice  Float
+  createdAt   DateTime @default(now())
+
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+}
+
+model Payment {
+  id                String   @id @default(uuid())
+  orderId           String   @unique
+  method            String   @default("CASH_ON_PICKUP") // RAZORPAY, CASH_ON_PICKUP
+  status            String   @default("PENDING") // PENDING, SUCCESS, FAILED, REFUNDED
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  razorpaySignature String?
+  amount            Float
+  currency          String   @default("INR")
+  failureReason     String?
+  refundId          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  order             Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model Pickup {
+  id                 String    @id @default(uuid())
+  orderId            String    @unique
+  pickupToken        String    @unique
+  qrCodeDataUrl      String
+  status             String    @default("PENDING") // PENDING, READY, COLLECTED, EXPIRED
+  scheduledSlot      String?
+  estimatedTime      DateTime?
+  readyAt            DateTime?
+  collectedAt        DateTime?
+  collectedByStaffId String?
+  notes              String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  order              Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  collectedByStaff   User?     @relation("StaffCollectedPickups", fields: [collectedByStaffId], references: [id], onDelete: SetNull)
+}
+
+model InventoryMovement {
+  id               String   @id @default(uuid())
+  productId        String
+  orderId          String?
+  type             String   // STOCK_IN, RESERVATION, SALE, RELEASE, ADJUSTMENT, LOSS
+  quantity         Int
+  balanceAfter     Int
+  notes            String?
+  createdByStaffId String?
+  createdAt        DateTime @default(now())
+
+  product          Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  order            Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  staff            User?    @relation("StaffInventoryMovements", fields: [createdByStaffId], references: [id], onDelete: SetNull)
+}
+
+model ShopSettings {
+  id                  String   @id @default("shop-settings-primary")
+  shopName            String   @default("QuickPick Fresh Market")
+  tagline             String   @default("Your Neighborhood Fresh Grocery & Quick Pickup")
+  phone               String   @default("+91 98765 43210")
+  email               String   @default("support@quickpickgrocery.com")
+  address             String   @default("Shop #4, Green Glen Plaza, 100 Feet Road, Bangalore, KA 560103")
+  openingTime         String   @default("07:00")
+  closingTime         String   @default("22:00")
+  slotDurationMinutes Int      @default(30)
+  maxOrdersPerSlot    Int      @default(12)
+  isShopOpen          Boolean  @default(true)
+  acceptAsap          Boolean  @default(true)
+  taxRate             Float    @default(0.05)
+  currency            String   @default("INR")
+  minOrderAmount      Float    @default(99.00)
+  razorpayKeyId       String?  @default("rzp_test_placeholder")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model PaymentWebhookEvent {
+  id          String    @id @default(uuid())
+  eventId     String    @unique
+  eventType   String
+  payload     String    // JSON string
+  status      String    @default("PENDING") // PENDING, PROCESSED, FAILED
+  processedAt DateTime?
+  error       String?
+  createdAt   DateTime  @default(now())
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  action     String
+  entityType String
+  entityId   String?
+  details    String?  // JSON string
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+}

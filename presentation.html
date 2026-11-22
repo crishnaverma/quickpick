@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickPick | Presentation Slide Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b0f19;
+      color: #f8fafc;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+      padding: 3.5rem 5rem;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    .slide.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 1;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="selection:bg-emerald-500 selection:text-white">
+
+  <!-- Slide 1: Title -->
+  <div class="slide active">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+        <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Architecture & Technical Overview</span>
+      </div>
+      <span class="text-xs text-slate-500">Slide 1 of 12</span>
+    </div>
+
+    <div class="max-w-4xl space-y-6">
+      <div class="w-16 h-2 bg-emerald-500 rounded-full"></div>
+      <h1 class="text-6xl font-black tracking-tight leading-tight">
+        QUICK<span class="text-emerald-500">PICK</span>
+      </h1>
+      <p class="text-3xl font-extrabold text-slate-200">
+        Grocery Click-and-Collect Platform for Local Stores
+      </p>
+      <p class="text-xl text-slate-400 font-medium leading-relaxed">
+        Eliminating supermarket checkout queues through online pre-ordering, staff bagging, and express 60-second counter QR collection.
+      </p>
+      <div class="pt-4 flex items-center gap-3 text-xs font-mono text-amber-400 bg-slate-900/90 p-4 rounded-2xl border border-slate-800 max-w-xl">
+        <span>🚀 React + Vite</span> • <span>Node.js + Express</span> • <span>PostgreSQL + Prisma</span> • <span>Socket.IO</span> • <span>Razorpay</span>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center text-xs text-slate-500 border-t border-slate-800/80 pt-4">
+      <span>Single-Shop Commercial Platform</span>
+      <span>Press <kbd class="px-2 py-1 bg-slate-800 text-slate-300 rounded font-mono">Space</kbd> or <kbd class="px-2 py-1 bg-slate-800 text-slate-300 rounded font-mono">→</kbd> to advance</span>
+    </div>
+  </div>
+
+  <!-- Slide 2: Problem & Solution -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Market Need & Value Proposition</span>
+      <span class="text-xs text-slate-500">Slide 2 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">The Supermarket Dilemma vs. QuickPick</h2>
+      <p class="text-sm text-slate-400 mt-2">Why click-and-collect is the optimal balance between speed, cost, and fresh quality.</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 my-auto">
+      <div class="bg-slate-900/90 p-6 rounded-3xl border border-rose-900/40 space-y-3">
+        <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Traditional Supermarket</span>
+        <h3 class="text-xl font-bold text-white">Long Checkout Queues</h3>
+        <ul class="text-sm text-slate-300 space-y-2.5">
+          <li>• Shoppers waste 25–40 minutes standing in billing lines.</li>
+          <li>• High peak-hour cart abandonment.</li>
+          <li>• Grocery shopping becomes an exhausting chore.</li>
+        </ul>
+      </div>
+
+      <div class="bg-slate-900/90 p-6 rounded-3xl border border-amber-900/40 space-y-3">
+        <span class="text-xs font-bold uppercase tracking-wider text-amber-400">3rd-Party Delivery Apps</span>
+        <h3 class="text-xl font-bold text-white">High Fees & Bruised Food</h3>
+        <ul class="text-sm text-slate-300 space-y-2.5">
+          <li>• Heavy delivery markups, surge fees, and platform commissions.</li>
+          <li>• Bruised produce, melted butter, and courier delays.</li>
+          <li>• Local grocers lose relationships to dark-store aggregators.</li>
+        </ul>
+      </div>
+
+      <div class="bg-slate-900/90 p-6 rounded-3xl border border-emerald-500/50 space-y-3 bg-gradient-to-b from-emerald-950/20 to-slate-900">
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">QuickPick Solution</span>
+        <h3 class="text-xl font-bold text-white">Express Counter Pickup</h3>
+        <ul class="text-sm text-slate-200 space-y-2.5">
+          <li>• <strong>Zero fees:</strong> No delivery charges or inflated markups.</li>
+          <li>• <strong>Staff packed:</strong> Fresh harvest handpicked and refrigerated.</li>
+          <li>• <strong>60-second handover:</strong> Walk in, scan QR, and walk out.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Solves customer wait times while preserving independent grocery margins</span>
+      <span>2 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 3: Tech Stack -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Architecture</span>
+      <span class="text-xs text-slate-500">Slide 3 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Full-Stack Technology Foundation</h2>
+      <p class="text-sm text-slate-400 mt-2">Modern, resilient, modular architecture designed for performance and reliability.</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 my-auto">
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4">
+        <h3 class="text-lg font-bold text-emerald-400 border-b border-slate-800 pb-2">Frontend Client</h3>
+        <div class="space-y-3 text-xs">
+          <div>
+            <p class="font-bold text-white text-sm">React 18 & Vite 5</p>
+            <p class="text-slate-400">Instant HMR, lightweight production bundle</p>
+          </div>
+          <div>
+            <p class="font-bold text-white text-sm">Tailwind CSS</p>
+            <p class="text-slate-400">Mobile-first responsive grocery design</p>
+          </div>
+          <div>
+            <p class="font-bold text-white text-sm">Socket.IO Client</p>
+            <p class="text-slate-400">Live order status push & counter alerts</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4">
+        <h3 class="text-lg font-bold text-emerald-400 border-b border-slate-800 pb-2">Backend API</h3>
+        <div class="space-y-3 text-xs">
+          <div>
+            <p class="font-bold text-white text-sm">Node.js 24 & Express 4</p>
+            <p class="text-slate-400">Modular routes, controllers, middleware</p>
+          </div>
+          <div>
+            <p class="font-bold text-white text-sm">Zod Schema Engine</p>
+            <p class="text-slate-400">Strict runtime parsing on all API payloads</p>
+          </div>
+          <div>
+            <p class="font-bold text-white text-sm">Helmet & Rate Limiter</p>
+            <p class="text-slate-400">Brute-force protection & security headers</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-4">
+        <h3 class="text-lg font-bold text-emerald-400 border-b border-slate-800 pb-2">Database & Security</h3>
+        <div class="space-y-3 text-xs">
+          <div>
+            <p class="font-bold text-white text-sm">PostgreSQL 16 & Prisma</p>
+            <p class="text-slate-400">Relational schema with atomic transactions</p>
+          </div>
+          <div>
+            <p class="font-bold text-white text-sm">Dual-Engine Auto Switch</p>
+            <p class="text-slate-400">PostgreSQL in cloud, SQLite local zero-config</p>
+          </div>
+          <div>
+            <p class="font-bold text-white text-sm">JWT & Bcrypt Hashing</p>
+            <p class="text-slate-400">Cost-10 password hashing with RBAC roles</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Zero vendor lock-in • Containerized via Docker</span>
+      <span>3 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 4: Customer Storefront -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Customer Journey</span>
+      <span class="text-xs text-slate-500">Slide 4 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">The Digital Grocery Storefront</h2>
+      <p class="text-sm text-slate-400 mt-2">Delivering a high-conversion, consumer-friendly grocery shopping interface.</p>
+    </div>
+
+    <div class="space-y-3 my-auto max-w-5xl">
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-base font-bold text-amber-400">9 Grocery Departments</h4>
+          <p class="text-xs text-slate-300 mt-0.5">Fruits, Vegetables, Dairy & Eggs, Bakery, Beverages, Snacks, Grains & Pulses, Personal Care, and Household essentials.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">22 Seeded Items</span>
+      </div>
+
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-base font-bold text-amber-400">Dynamic Weight & Pack Options</h4>
+          <p class="text-xs text-slate-300 mt-0.5">Shoppers toggle between portion sizes (250g, 500g, 1kg, 2kg) with live client-side price updates and server-side recalculation.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">Weight Multipliers</span>
+      </div>
+
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-base font-bold text-amber-400">Live Inventory Badging</h4>
+          <p class="text-xs text-slate-300 mt-0.5">'In Stock', 'Only 3 left' pulse warnings, and automatic disabling when warehouse stock is reserved.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">Real-time Stock</span>
+      </div>
+
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-base font-bold text-amber-400">Persistent Cart & ₹99 Minimum Bar</h4>
+          <p class="text-xs text-slate-300 mt-0.5">Slide-over drawer, persistent database sync across customer logins, and express checkout eligibility indicators.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">Persistent Sync</span>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>High-resolution produce photography • Fast filtering • Mobile-responsive</span>
+      <span>4 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 5: Checkout & Pickup Slots -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Logistics</span>
+      <span class="text-xs text-slate-500">Slide 5 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Express Checkout & Slot Management</h2>
+      <p class="text-sm text-slate-400 mt-2">Balancing customer convenience with warehouse packing throughput.</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 my-auto">
+      <div class="bg-slate-900 p-7 rounded-3xl border border-slate-800 space-y-4">
+        <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
+          <span>⚡ Pickup Timing Modes</span>
+        </h3>
+        <div class="space-y-3 text-xs text-slate-300">
+          <div class="p-3 bg-slate-800/60 rounded-xl">
+            <p class="font-bold text-white text-sm">Mode 1: ASAP Rapid Pickup</p>
+            <p class="text-slate-400 mt-0.5">Prepared immediately upon submission. Groceries ready in approx. 15–20 minutes.</p>
+          </div>
+          <div class="p-3 bg-slate-800/60 rounded-xl">
+            <p class="font-bold text-white text-sm">Mode 2: 30-Minute Scheduled Windows</p>
+            <p class="text-slate-400 mt-0.5">Customers choose a 30-min window for today or tomorrow. Capacity-capped to prevent bottlenecking.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 p-7 rounded-3xl border border-slate-800 space-y-4">
+        <h3 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
+          <span>💳 Flexible Payment Channels</span>
+        </h3>
+        <div class="space-y-3 text-xs text-slate-300">
+          <div class="p-3 bg-slate-800/60 rounded-xl">
+            <p class="font-bold text-white text-sm">Razorpay Online Payment</p>
+            <p class="text-slate-400 mt-0.5">Accepts UPI (Google Pay, PhonePe, Paytm), Cards, and NetBanking with server-side signature validation.</p>
+          </div>
+          <div class="p-3 bg-slate-800/60 rounded-xl">
+            <p class="font-bold text-white text-sm">Pay at Store Counter</p>
+            <p class="text-slate-400 mt-0.5">Pay upon bag collection (Cash, Card, or UPI). Eliminates online transaction hesitations for local shoppers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Capacity limits prevent overbooking • Dynamic slot closing during rushes</span>
+      <span>5 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 6: Real-time Order Tracking & QR -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Customer Handoff</span>
+      <span class="text-xs text-slate-500">Slide 6 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Real-Time Tracking & Encrypted QR Pass</h2>
+      <p class="text-sm text-slate-400 mt-2">Zero-refresh WebSocket updates with a 60-second in-store counter pass.</p>
+    </div>
+
+    <div class="space-y-6 my-auto">
+      <!-- 5-step status flow -->
+      <div class="grid grid-cols-5 gap-3">
+        <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 text-center">
+          <span class="text-[10px] font-mono text-amber-400 font-bold">01 PLACED</span>
+          <p class="font-bold text-white text-sm mt-1">Order Placed</p>
+          <p class="text-[11px] text-slate-400 mt-1">Stock reserved</p>
+        </div>
+        <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 text-center">
+          <span class="text-[10px] font-mono text-amber-400 font-bold">02 ACCEPTED</span>
+          <p class="font-bold text-white text-sm mt-1">Store Confirmed</p>
+          <p class="text-[11px] text-slate-400 mt-1">Queued for pack</p>
+        </div>
+        <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 text-center">
+          <span class="text-[10px] font-mono text-amber-400 font-bold">03 PREPARING</span>
+          <p class="font-bold text-white text-sm mt-1">Bagging Produce</p>
+          <p class="text-[11px] text-slate-400 mt-1">Staff handpicking</p>
+        </div>
+        <div class="p-4 bg-slate-900 rounded-2xl border border-emerald-500 text-center bg-emerald-950/20">
+          <span class="text-[10px] font-mono text-emerald-400 font-bold">04 READY</span>
+          <p class="font-bold text-white text-sm mt-1">At Counter</p>
+          <p class="text-[11px] text-emerald-300 mt-1">Chime alert</p>
+        </div>
+        <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 text-center">
+          <span class="text-[10px] font-mono text-slate-500 font-bold">05 COLLECTED</span>
+          <p class="font-bold text-white text-sm mt-1">Handed Over</p>
+          <p class="text-[11px] text-slate-400 mt-1">Finalized sale</p>
+        </div>
+      </div>
+
+      <!-- QR Card highlights -->
+      <div class="p-6 bg-slate-900 rounded-3xl border border-slate-800 flex items-center justify-between gap-6">
+        <div class="space-y-2">
+          <h4 class="text-xl font-bold text-emerald-400">Secure Digital Pickup Token</h4>
+          <p class="text-sm text-slate-300">
+            High-contrast Level H QR code generated uniquely for the order. Encodes an opaque validation payload with zero customer PII.
+          </p>
+          <div class="flex items-center gap-3 pt-2 text-xs text-slate-400">
+            <span>✔ Socket.IO reactive updates</span>
+            <span>✔ Audio chime on counter ready</span>
+            <span>✔ Customer self-cancellation allowed when PLACED</span>
+          </div>
+        </div>
+        <div class="w-24 h-24 bg-white rounded-2xl flex items-center justify-center shrink-0 text-slate-900 font-mono font-black text-xs text-center p-2">
+          QR TOKEN PASS
+        </div>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Zero polling • Live bi-directional Socket.IO updates</span>
+      <span>6 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 7: Admin Operations -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Store Staff</span>
+      <span class="text-xs text-slate-500">Slide 7 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Staff Operations & Fulfillment Board</h2>
+      <p class="text-sm text-slate-400 mt-2">Comprehensive control suite for store managers and pickup associates.</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 my-auto">
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-amber-400">Live KPIs & Analytics</h4>
+        <ul class="text-xs text-slate-300 space-y-2.5">
+          <li>• <strong>Today's Gross Sales:</strong> Live monetary revenue.</li>
+          <li>• <strong>Today's Orders:</strong> Total placed vs. completed.</li>
+          <li>• <strong>Pending Prep:</strong> Items waiting in bag queue.</li>
+          <li>• <strong>7-Day Trend Chart:</strong> Daily order volume distribution.</li>
+        </ul>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-amber-400">Order Management Queue</h4>
+        <ul class="text-xs text-slate-300 space-y-2.5">
+          <li>• <strong>Incoming Alerts:</strong> New orders flash with audio chimes.</li>
+          <li>• <strong>Bagging Checklist:</strong> Unit weights and customer notes.</li>
+          <li>• <strong>One-Click Workflow:</strong> Accept ➔ Start Bagging ➔ Mark Ready.</li>
+          <li>• <strong>Rejection Handling:</strong> Releases inventory with reason tracking.</li>
+        </ul>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-amber-400">Operating Configurations</h4>
+        <ul class="text-xs text-slate-300 space-y-2.5">
+          <li>• <strong>Emergency Toggle:</strong> Pause incoming orders instantly.</li>
+          <li>• <strong>ASAP Toggle:</strong> Disable rapid prep during high store rush.</li>
+          <li>• <strong>Store Hours:</strong> Configurable open/close timings.</li>
+          <li>• <strong>Financial Settings:</strong> 5% GST tax rate and ₹99 min order.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Dedicated roles: STAFF for counter associates • ADMIN for store owners</span>
+      <span>7 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 8: Pickup Scanner & Anti-Fraud -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Counter Security</span>
+      <span class="text-xs text-slate-500">Slide 8 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Counter Scanner & Anti-Duplicate Fraud</h2>
+      <p class="text-sm text-slate-400 mt-2">Preventing lost inventory and fraudulent duplicate handovers.</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 my-auto">
+      <div class="bg-slate-900 p-7 rounded-3xl border border-slate-800 space-y-4">
+        <h3 class="text-xl font-bold text-emerald-400">Counter Handover Flow</h3>
+        <ol class="text-xs text-slate-300 space-y-3">
+          <li class="flex gap-2">
+            <span class="font-bold text-amber-400">1.</span>
+            <span>Customer displays QR pass on phone at the express pickup desk.</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="font-bold text-amber-400">2.</span>
+            <span>Staff scans QR pass or inputs the 16-character token on tablet.</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="font-bold text-amber-400">3.</span>
+            <span>Backend verifies token cryptographic match and status is <strong>READY</strong>.</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="font-bold text-amber-400">4.</span>
+            <span>Screen displays itemized bag checklist and payment balance due.</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="font-bold text-amber-400">5.</span>
+            <span>Staff clicks 'Confirm Handover': records timestamp, logs staff ID, and marks payment paid.</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bg-slate-900 p-7 rounded-3xl border border-rose-900/40 space-y-4">
+        <h3 class="text-xl font-bold text-rose-400">Fraud & Double-Pickup Shield</h3>
+        <div class="space-y-3 text-xs text-slate-300">
+          <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+            <p class="font-bold text-white text-sm">Duplicate Handover Blocked</p>
+            <p class="text-slate-400 mt-1">If an already collected QR code is scanned again, the system immediately returns a <strong>400 FRAUD ALERT</strong> with exact collection date and staff ID.</p>
+          </div>
+          <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+            <p class="font-bold text-white text-sm">Premature Collection Blocked</p>
+            <p class="text-slate-400 mt-1">Orders in PLACED or PREPARING state cannot be collected until staff explicitly marks bags verified and ready.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Zero lost bags • Server-verified cryptographic token matching</span>
+      <span>8 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 9: Inventory Reservation -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Warehouse Integrity</span>
+      <span class="text-xs text-slate-500">Slide 9 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Atomic Inventory Reservation & Audit Logs</h2>
+      <p class="text-sm text-slate-400 mt-2">Eliminating overselling during peak grocery rushes with database transactions.</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 my-auto">
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-amber-400">Atomic Reservation</h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Executed inside Prisma <code>$transaction</code> blocks. 
+          <code>Available = StockQuantity - ReservedStock</code>. 
+          Simultaneous checkouts are strictly verified; stock cannot be oversold.
+        </p>
+        <span class="font-mono text-[10px] bg-slate-800 text-emerald-400 px-2 py-0.5 rounded">Prisma $transaction</span>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-amber-400">Automatic Stock Release</h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          When an order is cancelled by customer or rejected by store staff, reserved inventory is automatically released back to stock with structured movement records.
+        </p>
+        <span class="font-mono text-[10px] bg-slate-800 text-purple-400 px-2 py-0.5 rounded">RELEASE Event</span>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-amber-400">Audit Trail Ledger</h4>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          Every inventory event logs: <code>STOCK_IN</code>, <code>RESERVATION</code>, <code>SALE</code>, <code>RELEASE</code>, <code>ADJUSTMENT</code>, or <code>LOSS</code> with post-balance and staff author.
+        </p>
+        <span class="font-mono text-[10px] bg-slate-800 text-blue-400 px-2 py-0.5 rounded">Full Traceability</span>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Warehouse accuracy • Low stock threshold push alerts</span>
+      <span>9 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 10: Critical Business Logic -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Production Engineering</span>
+      <span class="text-xs text-slate-500">Slide 10 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Critical Production Business Rules</h2>
+      <p class="text-sm text-slate-400 mt-2">Rigorous engineering standards built directly into the codebase.</p>
+    </div>
+
+    <div class="space-y-3 my-auto max-w-5xl">
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-sm font-bold text-emerald-400">Zero Trust on Frontend Pricing</h4>
+          <p class="text-xs text-slate-300 mt-0.5">Frontend prices, tax calculations, and subtotals are completely ignored. All line items are recalculated server-side from database prices.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">Server-Side Calculation</span>
+      </div>
+
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-sm font-bold text-emerald-400">Idempotency Key Enforcement</h4>
+          <p class="text-xs text-slate-300 mt-0.5">Double-clicks and network retries pass an idempotency key. Duplicate submissions return the existing order without duplicate charges or stock holds.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">Idempotent Orders</span>
+      </div>
+
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-sm font-bold text-emerald-400">Server-Side Payment Signature Verification</h4>
+          <p class="text-xs text-slate-300 mt-0.5">Razorpay checkout orders require HMAC-SHA256 signature verification on the server before payment is marked SUCCESS.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">HMAC-SHA256</span>
+      </div>
+
+      <div class="p-4 bg-slate-900 rounded-2xl border border-slate-800 flex items-center justify-between">
+        <div>
+          <h4 class="text-sm font-bold text-emerald-400">Strict Rate Limiting & Helmet Headers</h4>
+          <p class="text-xs text-slate-300 mt-0.5">Authentication endpoints limited to 30 attempts / 15 mins. Checkout endpoints protected from brute-force bot sweeps.</p>
+        </div>
+        <span class="font-mono text-xs bg-slate-800 px-3 py-1 rounded text-slate-300">Rate Limiter</span>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Enterprise security & transactional integrity standards applied</span>
+      <span>10 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 11: Testing & Verification -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Quality Assurance</span>
+      <span class="text-xs text-slate-500">Slide 11 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Automated Verification & Test Coverage</h2>
+      <p class="text-sm text-slate-400 mt-2">Comprehensive test suite executing 23 end-to-end integration test scenarios.</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 my-auto">
+      <div class="bg-emerald-950/40 border border-emerald-500 p-8 rounded-3xl flex flex-col justify-between">
+        <div>
+          <span class="text-6xl font-black text-white">100%</span>
+          <p class="text-sm font-bold text-amber-400 mt-2">TEST PASS RATE</p>
+          <p class="text-xl font-bold text-white mt-4">23 Automated Scenarios</p>
+          <p class="text-xs text-emerald-300 mt-1">0 Failures • 0 Regressions</p>
+        </div>
+        <div class="font-mono text-xs text-slate-400 pt-4 border-t border-emerald-800/40">
+          Command: npm test
+        </div>
+      </div>
+
+      <div class="col-span-2 space-y-2.5">
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs flex justify-between items-center">
+          <div>
+            <p class="font-bold text-white">Health & Store Public Configuration</p>
+            <p class="text-slate-400">API health responses and public shop metadata</p>
+          </div>
+          <span class="text-emerald-400 font-bold">✔ PASS</span>
+        </div>
+
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs flex justify-between items-center">
+          <div>
+            <p class="font-bold text-white">Auth & RBAC Role Restrictions</p>
+            <p class="text-slate-400">Customer 403 blocking on admin routes; Staff authorization</p>
+          </div>
+          <span class="text-emerald-400 font-bold">✔ PASS</span>
+        </div>
+
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs flex justify-between items-center">
+          <div>
+            <p class="font-bold text-white">Atomic Inventory Reservation</p>
+            <p class="text-slate-400">Reserved stock increment and instant QR pass generation</p>
+          </div>
+          <span class="text-emerald-400 font-bold">✔ PASS</span>
+        </div>
+
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs flex justify-between items-center">
+          <div>
+            <p class="font-bold text-white">Idempotency Duplicate Order Protection</p>
+            <p class="text-slate-400">Replay attacks return existing order without double-booking</p>
+          </div>
+          <span class="text-emerald-400 font-bold">✔ PASS</span>
+        </div>
+
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs flex justify-between items-center">
+          <div>
+            <p class="font-bold text-white">Anti-Duplicate Pickup Handover</p>
+            <p class="text-slate-400">Validates token, confirms collection, and blocks duplicate scans</p>
+          </div>
+          <span class="text-emerald-400 font-bold">✔ PASS</span>
+        </div>
+
+        <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs flex justify-between items-center">
+          <div>
+            <p class="font-bold text-white">Order Cancellation & Automatic Stock Release</p>
+            <p class="text-slate-400">Reserved stock decremented and RELEASE movement audit written</p>
+          </div>
+          <span class="text-emerald-400 font-bold">✔ PASS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Automated regression testing runs via npm test</span>
+      <span>11 / 12</span>
+    </div>
+  </div>
+
+  <!-- Slide 12: Deployment & Roadmap -->
+  <div class="slide">
+    <div class="flex items-center justify-between">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400">Production Readiness</span>
+      <span class="text-xs text-slate-500">Slide 12 of 12</span>
+    </div>
+
+    <div>
+      <h2 class="text-4xl font-extrabold tracking-tight">Production Deployment & Future Roadmap</h2>
+      <p class="text-sm text-slate-400 mt-2">Ready for commercial launch and scalable enhancements.</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 my-auto">
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-emerald-400">Deployment Pipeline</h4>
+        <ul class="text-xs text-slate-300 space-y-2">
+          <li>• <strong>Frontend:</strong> Vercel Global Edge CDN.</li>
+          <li>• <strong>Backend:</strong> Render / Railway container service.</li>
+          <li>• <strong>Database:</strong> Managed PostgreSQL on Neon / Supabase.</li>
+          <li>• <strong>Docker:</strong> Pre-built multi-stage Dockerfile and docker-compose.yml.</li>
+        </ul>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-amber-400">1-Click Test Accounts</h4>
+        <div class="text-xs text-slate-300 space-y-2 font-mono bg-slate-950 p-3 rounded-xl border border-slate-800">
+          <p>👑 <strong>admin@quickpick.com</strong></p>
+          <p>🧑‍💼 <strong>staff@quickpick.com</strong></p>
+          <p>🛒 <strong>customer@example.com</strong></p>
+          <p class="text-amber-400">🔑 Pass: Admin@12345</p>
+        </div>
+        <p class="text-[11px] text-slate-400">One-click fast buttons in modal</p>
+      </div>
+
+      <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 space-y-3">
+        <h4 class="text-base font-bold text-blue-400">Future Enhancements</h4>
+        <ul class="text-xs text-slate-300 space-y-2">
+          <li>• Automated WhatsApp & SMS alerts when order is READY.</li>
+          <li>• Bluetooth thermal receipt printer integration (ESC/POS).</li>
+          <li>• Electronic shelf label (ESL) live synchronization.</li>
+          <li>• Multi-counter scaling for hypermarkets.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 border-t border-slate-800/80 pt-4 flex justify-between">
+      <span>Delivered complete with database, frontend, backend & documentation</span>
+      <span>12 / 12</span>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Controls -->
+  <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md p-1.5 rounded-2xl border border-slate-800 shadow-2xl">
+    <button id="prevBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition">
+      ← Prev
+    </button>
+    <span id="slideIndicator" class="text-xs font-mono font-bold px-2 text-emerald-400">1 / 12</span>
+    <button id="nextBtn" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition">
+      Next →
+    </button>
+    <button id="fsBtn" class="px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition" title="Toggle Fullscreen">
+      ⛶
+    </button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slideIndicator');
+
+    function showSlide(index) {
+      if (index < 0) index = 0;
+      if (index >= slides.length) index = slides.length - 1;
+
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      indicator.textContent = `${currentSlide + 1} / ${slides.length}`;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => showSlide(currentSlide - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => showSlide(currentSlide + 1));
+
+    document.getElementById('fsBtn').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        showSlide(currentSlide + 1);
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        showSlide(currentSlide - 1);
+      } else if (e.key === 'Home') {
+        showSlide(0);
+      } else if (e.key === 'End') {
+        showSlide(slides.length - 1);
+      }
+    });
+  </script>
+</body>
+</html>

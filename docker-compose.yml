@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: quickpick-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: quickpick
+      POSTGRES_PASSWORD: quickpickpassword123
+      POSTGRES_DB: quickpick
+    ports:
+      - "5432:5432"
+    volumes:
+      - quickpick_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quickpick -d quickpick"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: quickpick-api
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      DATABASE_URL: "postgresql://quickpick:quickpickpassword123@postgres:5432/quickpick?schema=public"
+      JWT_SECRET: "quickpick-super-secure-production-jwt-secret-2026"
+      RAZORPAY_KEY_ID: "rzp_test_quickpick2026"
+      RAZORPAY_KEY_SECRET: "quickpick_test_secret_key_placeholder"
+      CLIENT_URL: "http://localhost:5000"
+    ports:
+      - "5000:5000"
+
+volumes:
+  quickpick_pgdata:

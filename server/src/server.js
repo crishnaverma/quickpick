@@ -13,6 +13,23 @@ const io = initSocket(server);
 // Auto-seed if database is empty on startup
 const autoSeedIfEmpty = async () => {
   try {
+    const { execSync } = require('child_process');
+    const path = require('path');
+    const schemaFile = process.env.DATABASE_URL?.startsWith('file:')
+      ? 'prisma/schema.prisma'
+      : 'prisma/schema.postgresql.prisma';
+
+    console.log(`🔄 Verifying database schema tables using ${schemaFile}...`);
+    try {
+      execSync(`npx prisma db push --schema=${schemaFile} --accept-data-loss`, {
+        stdio: 'inherit',
+        cwd: path.resolve(__dirname, '..'),
+      });
+      console.log('✅ Database schema verified and synchronized.');
+    } catch (pushErr) {
+      console.warn('Schema sync note (may already be up to date):', pushErr.message);
+    }
+
     const productCount = await prisma.product.count();
     if (productCount === 0) {
       console.log('🌱 Database is empty (0 products found). Auto-seeding catalog & demo accounts...');

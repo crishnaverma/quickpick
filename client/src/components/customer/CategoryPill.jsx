@@ -15,6 +15,10 @@ export const CategoryPill = ({ category, isSelected, onClick }) => {
           src={category.image}
           alt={category.name}
           className="w-5 h-5 rounded-full object-cover shrink-0"
+          referrerPolicy="no-referrer"
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+          }}
         />
       )}
       <span>{category.name}</span>

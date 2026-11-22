@@ -177,6 +177,10 @@ async function main() {
   console.log(`✅ ${categoriesData.length} Categories created`);
 
   // 6. Products with realistic images, units, weight variants, pricing, and stock
+  const isPg = Boolean(process.env.DATABASE_URL && !process.env.DATABASE_URL.startsWith('file:'));
+  const toImg = (arr) => isPg ? arr : JSON.stringify(arr);
+  const toVar = (val) => (val === null ? null : (isPg ? val : JSON.stringify(val)));
+
   const productsData = [
     // Fruits
     {
@@ -184,7 +188,7 @@ async function main() {
       name: 'Royal Gala Crisp Apples (Shimla Fresh)',
       slug: 'royal-gala-apples',
       description: 'Crisp, sweet, and juicy red apples sourced directly from Himachal orchards. Rich in dietary fiber and antioxidants.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80',
         'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=800&q=80',
       ]),
@@ -198,7 +202,7 @@ async function main() {
       minStockThreshold: 10,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '500g', multiplier: 0.5, price: 95.00 },
         { label: '1 kg', multiplier: 1.0, price: 180.00 },
         { label: '2 kg', multiplier: 2.0, price: 345.00 },
@@ -209,7 +213,7 @@ async function main() {
       name: 'Organic Robusta Bananas',
       slug: 'organic-robusta-bananas',
       description: 'Naturally ripened, rich in potassium and energy. Perfect for breakfast smoothies and quick healthy snacking.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -222,7 +226,7 @@ async function main() {
       minStockThreshold: 15,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '500g (~3-4 pcs)', multiplier: 0.5, price: 32.00 },
         { label: '1 kg (~6-8 pcs)', multiplier: 1.0, price: 60.00 },
       ]),
@@ -232,7 +236,7 @@ async function main() {
       name: 'Alphonso Mangoes (Devgad Reserve)',
       slug: 'alphonso-mangoes',
       description: 'The King of Mangoes! Distinct saffron pulp, rich aromatic sweetness, and buttery texture. GI-tagged authentic produce.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -252,7 +256,7 @@ async function main() {
       name: 'Sweet Ruby Pomegranate (Kesar)',
       slug: 'ruby-pomegranate',
       description: 'Deep ruby-red arils bursting with sweet, refreshing juice. Carefully graded for high sweetness and soft seeds.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -265,7 +269,7 @@ async function main() {
       minStockThreshold: 8,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '500g (~2 pcs)', multiplier: 0.5, price: 110.00 },
         { label: '1 kg (~4 pcs)', multiplier: 1.0, price: 210.00 },
       ]),
@@ -277,7 +281,7 @@ async function main() {
       name: 'Vine-Ripened Country Tomatoes',
       slug: 'vine-ripened-tomatoes',
       description: 'Plump, tangy, farm-fresh local tomatoes. Ideal for curries, rasam, salads, and fresh salsa.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -290,7 +294,7 @@ async function main() {
       minStockThreshold: 20,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '500g', multiplier: 0.5, price: 24.00 },
         { label: '1 kg', multiplier: 1.0, price: 45.00 },
         { label: '2 kg', multiplier: 2.0, price: 86.00 },
@@ -301,7 +305,7 @@ async function main() {
       name: 'Nashik Red Onions (Premium Grade)',
       slug: 'nashik-red-onions',
       description: 'Firm, dry-skinned, pungent red onions. Essential kitchen staple with long shelf life and punchy flavor.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -314,7 +318,7 @@ async function main() {
       minStockThreshold: 25,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '1 kg', multiplier: 1.0, price: 52.00 },
         { label: '2 kg', multiplier: 2.0, price: 98.00 },
         { label: '5 kg (Saver Pack)', multiplier: 5.0, price: 235.00 },
@@ -325,7 +329,7 @@ async function main() {
       name: 'Golden Baby Potatoes',
       slug: 'golden-baby-potatoes',
       description: 'Tender baby potatoes with thin skins. Ideal for Dum Aloo, roasts, boiling, and crispy wedges.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -338,7 +342,7 @@ async function main() {
       minStockThreshold: 20,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '1 kg', multiplier: 1.0, price: 40.00 },
         { label: '2 kg', multiplier: 2.0, price: 76.00 },
       ]),
@@ -348,7 +352,7 @@ async function main() {
       name: 'Crisp English Cucumbers',
       slug: 'crisp-english-cucumbers',
       description: 'Seedless, thin-skinned and extra hydrating. Excellent for raita, cooling summer salads and detox water.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -361,7 +365,7 @@ async function main() {
       minStockThreshold: 10,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '500g (~2 pcs)', multiplier: 0.5, price: 35.00 },
         { label: '1 kg (~4 pcs)', multiplier: 1.0, price: 65.00 },
       ]),
@@ -371,7 +375,7 @@ async function main() {
       name: 'Hydroponic Tender Spinach (Palak)',
       slug: 'tender-spinach-palak',
       description: 'Washed, soil-free tender baby spinach leaves. High iron, vitamin K and fresh earthy aroma.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -393,7 +397,7 @@ async function main() {
       name: 'Farm-Fresh Pasteurized Whole Milk (3.5% Fat)',
       slug: 'farm-fresh-whole-milk',
       description: 'Pure, rich whole milk delivered cold daily from local dairy farms. No preservatives or adulterants.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -413,7 +417,7 @@ async function main() {
       name: 'Artisanal Malai Paneer (Fresh Cottage Cheese)',
       slug: 'artisanal-malai-paneer',
       description: 'Melt-in-mouth soft paneer made from pure cow milk. High protein, velvety texture, ideal for shahi paneer and tikka.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -426,7 +430,7 @@ async function main() {
       minStockThreshold: 8,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '200g block', multiplier: 1.0, price: 105.00 },
         { label: '400g block (Value Pack)', multiplier: 2.0, price: 198.00 },
       ]),
@@ -436,7 +440,7 @@ async function main() {
       name: 'Free-Range Organic Brown Eggs',
       slug: 'free-range-brown-eggs',
       description: 'Farm-fresh nutritious brown eggs from pasture-raised hens fed organic grains and herbs.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1516448620398-c5f44bf9f441?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -456,7 +460,7 @@ async function main() {
       name: 'A2 Vedic Desi Cow Bilona Ghee',
       slug: 'a2-desi-cow-bilona-ghee',
       description: 'Traditional slow-cooked bilona ghee from grass-fed Gir cows. Rich aroma, golden granulations, Ayurvedic digestive benefits.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1631452180677-7429188e7343?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -478,7 +482,7 @@ async function main() {
       name: 'Artisan Whole Wheat Sourdough Loaf',
       slug: 'whole-wheat-sourdough-loaf',
       description: 'Naturally fermented for 24 hours with wild yeast culture. Crisp crackly crust, open crumb, and wholesome gut-friendly tang.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1589367920969-ab8e050bbb04?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -498,7 +502,7 @@ async function main() {
       name: 'Fresh Mumbai Pav Buns (Zero Maida)',
       slug: 'fresh-mumbai-pav-buns',
       description: 'Fluffy, cloud-soft whole wheat dinner rolls. Made fresh every morning, perfect companion for Misal and Bhaji.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -520,7 +524,7 @@ async function main() {
       name: 'Raw Cold-Pressed Valencia Orange Juice',
       slug: 'raw-valencia-orange-juice',
       description: '100% pure Valencia oranges cold-pressed with zero added sugar, water or preservatives. Vitamin C booster.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -540,7 +544,7 @@ async function main() {
       name: 'Authentic South Indian Degree Filter Coffee Powder',
       slug: 'south-indian-filter-coffee',
       description: 'Chikmagalur Arabica-Robusta blend roasted to dark perfection with 15% chicory for thick golden decoction.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -553,7 +557,7 @@ async function main() {
       minStockThreshold: 8,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '250g pouch', multiplier: 1.0, price: 175.00 },
         { label: '500g pouch (Saver)', multiplier: 2.0, price: 330.00 },
       ]),
@@ -565,7 +569,7 @@ async function main() {
       name: 'California Jumbo Almonds (Badam) - Slow Roasted',
       slug: 'california-jumbo-almonds',
       description: 'Crisp, crunchy California Nonpareil almonds slow-roasted with Himalayan pink salt. High in vitamin E and healthy fats.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -578,7 +582,7 @@ async function main() {
       minStockThreshold: 8,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '250g pouch', multiplier: 1.0, price: 280.00 },
         { label: '500g pouch', multiplier: 2.0, price: 540.00 },
       ]),
@@ -590,7 +594,7 @@ async function main() {
       name: 'Royal Aged Kohinoor Basmati Rice (2 Years Aged)',
       slug: 'royal-aged-basmati-rice',
       description: 'Extra long slender grains that elongate up to 2.5x upon cooking with enchanting royal aroma. Perfect for biryani & pulao.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -603,7 +607,7 @@ async function main() {
       minStockThreshold: 15,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '1 kg pack', multiplier: 1.0, price: 195.00 },
         { label: '5 kg bag (Value)', multiplier: 5.0, price: 899.00 },
       ]),
@@ -613,7 +617,7 @@ async function main() {
       name: 'Organic Unpolished Toor Dal (Arhar Pulses)',
       slug: 'organic-unpolished-toor-dal',
       description: 'Zero chemical polish to preserve rich natural dietary fiber, folic acid, and protein. Cooks into creamy aromatic dal.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1585992639927-435ba50567e9?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'WEIGHT',
@@ -626,7 +630,7 @@ async function main() {
       minStockThreshold: 12,
       isAvailable: true,
       isActive: true,
-      variants: JSON.stringify([
+      variants: toVar([
         { label: '1 kg pack', multiplier: 1.0, price: 175.00 },
         { label: '2 kg pack', multiplier: 2.0, price: 340.00 },
       ]),
@@ -638,7 +642,7 @@ async function main() {
       name: 'Ayurvedic Neem & Aloe Gentle Foaming Handwash',
       slug: 'neem-aloe-foaming-handwash',
       description: 'Natural antibacterial formula that protects hands from 99.9% germs while keeping skin soft, hydrated, and refreshed.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',
@@ -660,7 +664,7 @@ async function main() {
       name: 'Plant-Based Citrus Floor Cleaner (Pet Safe)',
       slug: 'plant-based-citrus-floor-cleaner',
       description: 'Tough on stains, completely non-toxic and child-safe. Infused with natural lemongrass and sweet orange essential oils.',
-      images: JSON.stringify([
+      images: toImg([
         'https://images.unsplash.com/photo-1585421514738-01798e348b17?auto=format&fit=crop&w=800&q=80',
       ]),
       unitType: 'FIXED',

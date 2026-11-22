@@ -20,6 +20,7 @@ const app = express();
 // Security Middleware
 app.use(helmet({
   crossOriginResourcePolicy: false,
+  contentSecurityPolicy: false, // Allows images from Unsplash and scripts from Razorpay CDN
 }));
 
 // CORS Configuration
@@ -64,6 +65,21 @@ app.get('/api/health', (req, res) => {
 // One-Click Database Seed Endpoint
 app.post('/api/seed', async (req, res) => {
   try {
+    const { execSync } = require('child_process');
+    const path = require('path');
+    const schemaFile = process.env.DATABASE_URL?.startsWith('file:')
+      ? 'prisma/schema.prisma'
+      : 'prisma/schema.postgresql.prisma';
+
+    try {
+      execSync(`npx prisma db push --schema=${schemaFile} --accept-data-loss`, {
+        stdio: 'inherit',
+        cwd: path.resolve(__dirname, '..'),
+      });
+    } catch (pushErr) {
+      console.warn('Schema push note:', pushErr.message);
+    }
+
     const { seedDatabase } = require('./database/seed');
     await seedDatabase();
     return success(res, null, 'Grocery catalog, categories & demo accounts seeded successfully!');
